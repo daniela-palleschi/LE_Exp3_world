@@ -11,7 +11,7 @@ PennController.ResetPrefix(null);
 // full sequence test run (8 items):
 //PennController.Sequence( "demographics", "instructions1", "practice", "instructions2", subsequence(repeat(shuffle(randomize("critical"), randomize("filler")), 25) , "break"), "post-instructions", "post-ques", "post-task-intro", "post-task",  "send", "final");
 PennController.Sequence("instructions1", "practice","instructions2", subsequence(repeat(shuffle(randomize("critical"), randomize("filler")), 5) , "break"),"post-task-intro", "post_task_prac", "post-task-start",randomize("post_task"),"send","final");
-//PennController.Sequence(randomize("post_task"),"send","final");
+//PennController.Sequence("post_task_prac", randomize("post_task"),"send","final");
 
 // FOR REAL PARTICIPANTS; check: # of trials, DebugOff, DELETE results file
 //PennController.DebugOff()
@@ -24,11 +24,11 @@ dashed = (sentence, remove) => {
     let words = sentence.split('*'),  blanks = words.map(w=>w.split('').map(c=>'_').join('') ); // 'sentence.spilot('*')' = '*' defines the chunk boundaries (in the .csv)
     let textName = 'dashed'+words.join('');
     // We'll return cmds: the first command consists in creating (and printing) a Text element with dashes
-    let cmds = [ newText(textName, blanks.join(' ')).print() 
-    .settings.css("font-family","courier") 
+    let cmds = [ newText(textName, blanks.join(' ')).print()
+    .settings.css("font-family","courier")
     .settings.css("font-size", "20px")
     //.settings.css("font-size", "2em")  
-    .settings.center() 
+    .settings.center()
     .cssContainer({
     "width": "90vw"})
     ]; // COURIER as font
@@ -60,7 +60,7 @@ cumulative_bio = (sentence, remove) => {
     cmds = cmds.concat([ newKey('context'+i+words[i], " ").log().wait() , // Wait for (and log) a press on Space
     getText(textName).text(blanks.map((w,n)=>(n<=i?words[n]:w)).join(' ')) ]); // Show word
     if (remove)  // Remove the text after the last key.wait() is parameter specified
-    cmds.push(getText(textName).remove()); 
+    cmds.push(getText(textName).remove());
     return cmds;
 };
 
@@ -75,7 +75,7 @@ cumulative = (sentence, remove) => {
     cmds = cmds.concat([ newKey('cumulative'+i+words[i], " ").log().wait() , // Wait for (and log) a press on Space
     getText(textName).text(blanks.map((w,n)=>(n<=i?words[n]:w)).join(' ')) ]); // Show word
     if (remove)  // Remove the text after the last key.wait() is parameter specified
-    cmds.push(getText(textName).remove()); 
+    cmds.push(getText(textName).remove());
     return cmds;
 };
 
@@ -90,7 +90,7 @@ cumulative_crit = (sentence, remove) => {
     cmds = cmds.concat([ newKey('critical'+i+words[i], " ").log().wait() , // Wait for (and log) a press on Space
     getText(textName).text(blanks.map((w,n)=>(n<=i?words[n]:w)).join(' ')) ]); // Show word
     if (remove)  // Remove the text after the last key.wait() is parameter specified
-    cmds.push(getText(textName).remove()); 
+    cmds.push(getText(textName).remove());
     return cmds;
 };
 
@@ -107,7 +107,7 @@ PennController("demographics",
                .print()
                ,
                newTextInput("proID", "")
-               .before(newText("proID", "Before we begin, please enter your Prolific ID: ") 
+               .before(newText("proID", "Before we begin, please enter your Prolific ID: ")
                        .settings.css("font-size", "20px"))
                .size(100, 20)
                .settings.center()
@@ -117,8 +117,8 @@ PennController("demographics",
                .print()
                ,
                newButton("start", "Continue")
-               .settings.center() 
-               .print() 
+               .settings.center()
+               .print()
                .wait(getTextInput("proID")
                      .test.text(/[^\s]+/)
                      .success()
@@ -320,14 +320,14 @@ PennController("demographics",
     .log("age", getVar("IDage"))
     .log("sex", getVar("IDsex"))
     .log("L2", getVar("IDling"))
-    .log("whichL2", getVar("whichL2")) 
+    .log("whichL2", getVar("whichL2"))
     .log("type", "demo")
     .log("lifetime" , "demo")
     .log("tense", "demo")
     .log("mm", "demo")
     .log("match", "demo")
     .log("rating", "demo")
-    .log("item" , "demo") 
+    .log("item" , "demo")
     .log("name" , "demo")  
     .log("list", "demo")
     .log( "withsquare", PennController.GetURLParameter("withsquare"))    
@@ -543,14 +543,14 @@ PennController( "instructions1",
     .log("age", getVar("IDage"))
     .log("sex", getVar("IDsex"))
     .log("L2", getVar("IDling"))
-    .log("whichL2", getVar("whichL2")) 
+    .log("whichL2", getVar("whichL2"))
     .log("type", "instr")
     .log("lifetime" , "instr")
     .log("tense", "instr")
     .log("mm", "instr")  
     .log("match", "instr")
     .log("rating", "instr")
-    .log("item" , "instr") 
+    .log("item" , "instr")
     .log("name" , "instr")  
     .log("list", "instr")
     .log( "withsquare", PennController.GetURLParameter("withsquare"))    
@@ -578,11 +578,7 @@ PennController.Template( PennController.GetTable( "master_spr_subset24_world_fak
                                           newImage("crossmark", "https://amor.cms.hu-berlin.de/~pallesid/dfg_pretests/pictures/crossmark.png")
                                           .size(30,30)
                                           ,
-                                          // set trial's correct response; must remain here
-                                          newVar("match")
-                                          .set(variable.match)
                                           
-                                          ,
                                           // dots
                                           newText("dots", "...")
                                           .print("20vw","40vh")
@@ -635,7 +631,7 @@ PennController.Template( PennController.GetTable( "master_spr_subset24_world_fak
                                           ,
                                           getImage("crossmark")
                                           .remove()
-                                          , 
+                                          ,
                                           newText ("crit_instru","<i><b>Press the spacebar</b> to reveal the next chunk.</i>")
                                           .settings.css("font-size", "15px")
                                           .settings.center()
@@ -659,7 +655,7 @@ PennController.Template( PennController.GetTable( "master_spr_subset24_world_fak
                                       .settings.color("red")
                                       .print("center at 50%","30vh")
                                       // judgement task
-                                      , 
+                                      ,
                                       getImage("checkmark")
                                       .print("30vw","50vh")
                                       ,
@@ -687,7 +683,7 @@ PennController.Template( PennController.GetTable( "master_spr_subset24_world_fak
                                       ,  
                                       getText("rating_instru")
                                       .remove()
-                                      , 
+                                      ,
                                       // create variable for rating response
                                       newVar("rating")
                                       .set(getKey("rating") )
@@ -704,14 +700,13 @@ PennController.Template( PennController.GetTable( "master_spr_subset24_world_fak
                                       .log("age", getVar("IDage"))
                                       .log("sex", getVar("IDsex"))
                                       .log("L2", getVar("IDling"))
-                                      .log("whichL2", getVar("whichL2")) 
+                                      .log("whichL2", getVar("whichL2"))
                                       .log("type", variable.type)
                                       .log("lifetime" , variable.lifetime)
                                       .log("tense", variable.tense)
                                       .log("mm", variable.mm)
-                                      .log("match", variable.match)
-                                      .log("rating", getVar("rating"))
-                                      .log("item" , variable.item_id) 
+                                                                            .log("rating", getVar("rating"))
+                                      .log("item" , variable.item_id)
                                       .log("name" , variable.name)  
                                       .log("list", variable.list)
                                       .log( "withsquare", PennController.GetURLParameter("withsquare") )    
@@ -767,14 +762,14 @@ PennController( "instructions2" ,
     .log("age", getVar("IDage"))
     .log("sex", getVar("IDsex"))
     .log("L2", getVar("IDling"))
-    .log("whichL2", getVar("whichL2")) 
+    .log("whichL2", getVar("whichL2"))
     .log("type", "instr2")
     .log("lifetime" , "instr2")
     .log("tense", "instr2")
     .log("mm", "instr2")
     .log("match", "instr2")
     .log("rating", "instr2")
-    .log("item" , "instr2") 
+    .log("item" , "instr2")
     .log("name" , "instr2")  
     .log("list", "instr2")
     .log( "withsquare", PennController.GetURLParameter("withsquare"))    
@@ -902,14 +897,13 @@ PennController.Template( PennController.GetTable( "master_spr_subset24_world_fak
                                       .log("age", getVar("IDage"))
                                       .log("sex", getVar("IDsex"))
                                       .log("L2", getVar("IDling"))
-                                      .log("whichL2", getVar("whichL2")) 
+                                      .log("whichL2", getVar("whichL2"))
                                       .log("type", variable.type)
                                       .log("lifetime" , variable.lifetime)
                                       .log("tense", variable.tense)
                                       .log("mm", variable.mm)
-                                      .log("match", variable.match)
-                                      .log("rating", getVar("rating"))
-                                      .log("item" , variable.item_id) 
+                                                                            .log("rating", getVar("rating"))
+                                      .log("item" , variable.item_id)
                                       .log("name" , variable.name)  
                                       .log("list", variable.list)
                                       .log( "withsquare", PennController.GetURLParameter("withsquare") )    
@@ -1014,18 +1008,18 @@ PennController.Template( PennController.GetTable( "master_spr_subset24_world_fak
                                       //.settings.global()
                                       .set(getKey("rating") )
                                       )
-                                      .log("prolificID", getVar("proID")) 
+                                      .log("prolificID", getVar("proID"))
                                       .log("age", getVar("IDage"))
                                       .log("sex", getVar("IDsex"))
                                       .log("L2", getVar("IDling"))
-                                      .log("whichL2", getVar("whichL2")) 
+                                      .log("whichL2", getVar("whichL2"))
                                       .log("type", variable.type)
                                       .log("lifetime" , variable.lifetime)
                                       .log("tense", variable.tense)
                                       .log("mm", variable.mm)
-                                      .log("match", variable.match)
+                                      
                                       .log("rating", getVar("rating"))
-                                      .log("item" , variable.item_id) 
+                                      .log("item" , variable.item_id)
                                       .log("name" , variable.name)  
                                       .log("list", variable.list)
                                       .log( "withsquare", PennController.GetURLParameter("withsquare") )    
@@ -1083,14 +1077,14 @@ PennController( "break" ,
     .log("age", getVar("IDage"))
     .log("sex", getVar("IDsex"))
     .log("L2", getVar("IDling"))
-    .log("whichL2", getVar("whichL2")) 
+    .log("whichL2", getVar("whichL2"))
     .log("type", "break")
     .log("lifetime" , "break")
     .log("tense", "break")
     .log("mm", "break")
     .log("match", "break")
     .log("rating", "break")
-    .log("item" , "break") 
+    .log("item" , "break")
     .log("name" , "break")  
     .log("list", "break")
     .log( "withsquare", PennController.GetURLParameter("withsquare"))    
@@ -1118,18 +1112,18 @@ PennController( "post-instructions",
     .log("age", getVar("IDage"))
     .log("sex", getVar("IDsex"))
     .log("L2", getVar("IDling"))
-    .log("whichL2", getVar("whichL2")) 
+    .log("whichL2", getVar("whichL2"))
     .log("type", "post-instr")
     .log("lifetime" , "post-instr")
     .log("tense", "post-instr")
     .log("mm", "post-instr")
     .log("match", "post-instr")
     .log("rating", "post-instr")
-    .log("item" , "post-instr") 
+    .log("item" , "post-instr")
     .log("name" , "post-instr")  
     .log("list", "post-instr")
     .log( "withsquare", PennController.GetURLParameter("withsquare") )    
-    .log("bare_verb","post-instr") 
+    .log("bare_verb","post-instr")
     .log( "yes_key" , getVar("yes_key"))  
     
     
@@ -1240,14 +1234,14 @@ PennController("post-ques",
     .log("age", getVar("IDage"))
     .log("sex", getVar("IDsex"))
     .log("L2", getVar("IDling"))
-    .log("whichL2", getVar("whichL2")) 
+    .log("whichL2", getVar("whichL2"))
     .log("type", "post-ques")
     .log("lifetime" , "post-ques")
     .log("tense", "post-ques")
     .log("mm", "post-ques")
     .log("match", "post-ques")
     .log("rating", "post-ques")
-    .log("item" , "post-ques") 
+    .log("item" , "post-ques")
     .log("name" , "post-ques")  
     .log("list", "post-ques")
     .log( "withsquare", PennController.GetURLParameter("withsquare"))    
@@ -1277,188 +1271,6 @@ PennController( "post-task-intro",
                 newCanvas("compCanv", 900, 300)
                 .settings.add(0,0, getText("comp1_1"))
                 .settings.add(0,100, getText("comp1_2")  )
-                .print()   
-                ,
-                newKey("compStart", " ")
-                .wait()
-               )
-    
-    .setOption("countsForProgressBar", false)   //overrides some default settings, such as countsForProgressBar
-    .setOption("hideProgressBar", true);
-
-//====================================================================================================================================================================================================================
-// 11. Post task (Pretest 3)
-
-PennController. Template( PennController.GetTable( "master_spr_subset24_world_fake_8verbs.csv")// change this line for the appropriate experimental list
-                          .filter("type" , "practice")
-                          ,
-                          variable => ["post_task_prac",
-                                       "PennController", PennController(
-                                           defaultText
-                                           .settings.css("font-family","courier")
-                                           // NEW TEXT
-                                           ,
-                                           newText("post_name",  variable.name)
-                                           .settings.css("font-size", "25px")
-                                           .settings.center()
-                                           ,
-                                           newText("occupation_correct", variable.occupation)
-                                           .settings.css("font-size", "25px")
-                                           .settings.center()
-                                           ,
-                                           newText("occupation_incorrect", variable.occupation_distractor)
-                                           .settings.css("font-size", "25px")
-                                           .settings.center()
-                                           ,
-                                           newText("nationality_correct",  variable.nationality)
-                                           .settings.css("font-size", "25px")
-                                           .settings.center()
-                                           ,
-                                           newText("nationality_incorrect",  variable.nationality_distractor)
-                                           .settings.css("font-size", "25px")
-                                           .settings.center()
-                                           ,
-                                           newText("lifetime_correct", variable.lifetime)
-                                           .settings.css("font-size", "25px")
-                                           .settings.center()
-                                           ,
-                                           newText("lifetime_incorrect", variable.lifetime_distractor)
-                                           .settings.css("font-size", "25px")
-                                           .settings.center()
-                                           ,
-                                           newImage("checkmark", "https://amor.cms.hu-berlin.de/~pallesid/dfg_pretests/pictures/checkmark.jpeg")
-                                           .size(30,30)
-                                           ,
-                                           newImage("crossmark", "https://amor.cms.hu-berlin.de/~pallesid/dfg_pretests/pictures/crossmark.png")
-                                           .size(30,30)
-                                           ,
-                                           // NAME
-                                           newCanvas("name", "100vw" , "100vh")
-                                           .add("center at 50%", "center at 20%", getText("post_name"))
-                                           .add("center at 25%", "center at 20%", getImage("checkmark") )
-                                           .add("center at 75%", "center at 20%", getImage("crossmark") )
-                                           .center()
-                                           .print()
-                                           .log()
-                                           ,
-                                           newSelector("post_name")
-                                           .add(getImage("checkmark"), getImage("crossmark"))
-                                           .keys("F", "J")
-                                           .wait()
-                                           .log()
-                                           ,
-                                           getCanvas("name")
-                                           .remove()
-                                           ,
-                                           getSelector("post_name")
-                                           .remove()
-                                           ,
-                                           // LIFETIME
-                                           newCanvas("lifetime", "100vw" , "100vh")
-                                           .add( "center at 30%", "center at 20%", getText("lifetime_correct"))
-                                           .add( "center at 70%", "center at 20%", getText("lifetime_incorrect"))
-                                           .center()
-                                           .print()
-                                           .log()
-                                           ,
-                                           newSelector("post_lifetime")
-                                           .add(getText("lifetime_correct"), getText("lifetime_incorrect"))
-                                           .shuffle()
-                                           .keys("F", "J")
-                                           .wait()
-                                           .log()
-                                           ,
-                                           getCanvas("lifetime")
-                                           .remove()
-                                           ,
-                                           getSelector("post_lifetime")
-                                           .remove()
-                                           ,
-                                           // NATIONALITY
-                                           newCanvas("nationality", "100vw" , "100vh")
-                                           .add( "center at 30%", "center at 20%", getText("nationality_correct"))
-                                           .add( "center at 70%", "center at 20%", getText("nationality_incorrect"))
-                                           .center()
-                                           .print()
-                                           .log()
-                                           ,
-                                           newSelector("post_nationality")
-                                           .add(getText("nationality_correct"), getText("nationality_incorrect"))
-                                           .shuffle()
-                                           .keys("F", "J")
-                                           .wait()
-                                           .log()
-                                           ,
-                                           getCanvas("nationality")
-                                           .remove()
-                                           ,
-                                           getSelector("post_nationality")
-                                           .remove()
-                                           ,
-                                           // OCCUPATIION
-                                           newCanvas("occupation", "100vw" , "100vh")
-                                           .add(  "center at 30%", "center at 20%", getText("occupation_correct"))
-                                           .add("center at 70%", "center at 20%", getText("occupation_incorrect"))
-                                           .center()
-                                           .print()
-                                           .log()
-                                           ,
-                                           newSelector("post_occupation")
-                                           .add(getText("occupation_correct"), getText("occupation_incorrect"))
-                                           .shuffle()
-                                           .keys("F", "J")
-                                           .wait()
-                                           .log()
-                                           ,
-                                           getCanvas("occupation")
-                                           .remove()
-                                           ,
-                                           getSelector("post_occupation")
-                                           .remove()
-                                           ,
-                                           // WAIT
-                                           newCanvas("dots", "100vw" , "100vh")
-                                           .add("center at 50%", "center at 20%", newText("pleasewait_post2", "...").settings.css("font-size", "25px").settings.bold())
-                                           .center()
-                                           .print()
-                                           .log()
-                                           ,
-                                           newTimer("wait_post2", 1000)
-                                           .start()
-                                           .wait()
-                                           ,
-                                           getCanvas("dots")
-                                           .remove()
-                                       )
-                                       .log("prolificID", getVar("proID"))
-                                       .log("age", getVar("IDage"))
-                                       .log("sex", getVar("IDsex"))
-                                       .log("L2", getVar("IDling"))
-                                       .log("whichL2", getVar("whichL2"))
-                                       .log("type", variable.type)
-                                       .log("lifetime" , variable.lifetime)
-                                       .log("tense", variable.tense)
-                                       .log("mm", variable.mm)
-                                       .log("match", variable.match)
-                                       .log("rating", getVar("rating"))
-                                       .log("item" , variable.item_id)
-                                       .log("name" , variable.name)  
-                                       .log("list", variable.list)
-                                       .log( "withsquare", PennController.GetURLParameter("withsquare") )    
-                                       .log("bare_verb", variable.bare)   
-                                       .log( "yes_key" , getVar("yes_key"))
-                                       .log
-                                      ]);  
-
-//====================================================================================================================================================================================================================
-// 7. Comprehension test explanation screen //
-
-PennController( "post-task-start",
-                newText("post_start", "<p>That was the practice round. When you're ready to continue, press the spacebar.")
-                .settings.css("font-size", "20px")
-                ,
-                newCanvas("compCanv", 900, 300)
-                .settings.add(0,0, getText("post_start"))
                 .print()   
                 ,
                 newKey("compStart", " ")
@@ -1584,7 +1396,148 @@ PennController. Template( PennController.GetTable( "master_spr_subset24_world_fa
                                        .log("lifetime" , variable.lifetime)
                                        .log("tense", variable.tense)
                                        .log("mm", variable.mm)
-                                       .log("match", variable.match)
+                                       .log("rating", getVar("rating"))
+                                       .log("item" , variable.item_id)
+                                       .log("name" , variable.name)  
+                                       .log("list", variable.list)
+                                       .log( "withsquare", PennController.GetURLParameter("withsquare") )    
+                                       .log("bare_verb", variable.bare)   
+                                       .log( "yes_key" , getVar("yes_key"))
+                                      ]);    
+
+//====================================================================================================================================================================================================================
+// 7. Comprehension test explanation screen //
+
+PennController( "post-task-start",
+                newText("post_start", "<p>That was the practice round. When you're ready to continue, press the spacebar.")
+                .settings.css("font-size", "20px")
+                ,
+                newCanvas("compCanv", 900, 300)
+                .settings.add(0,0, getText("post_start"))
+                .print()   
+                ,
+                newKey("compStart", " ")
+                .wait()
+               )
+    
+    .setOption("countsForProgressBar", false)   //overrides some default settings, such as countsForProgressBar
+    .setOption("hideProgressBar", true);
+
+//====================================================================================================================================================================================================================
+// 11. Post task (Pretest 3)
+
+PennController. Template( PennController.GetTable( "master_spr_subset24_world_fake_8verbs.csv")// change this line for the appropriate experimental list
+                          .filter("type" , "practice")
+                          ,
+                          variable => ["post_task_prac",
+                                       "PennController", PennController(
+                                           defaultText
+                                           .css({"font-family":"courier","font-size":"25px"})
+                                           .center()
+                                           ,
+                                           defaultSelector
+                                           .once()
+                                           .log()
+                                           ,
+                                           defaultCanvas
+                                           .log()
+                                           .center()
+                                           // NEW TEXT
+                                           ,
+                                           newText("post_name",  variable.name)
+                                           ,
+                                           newText("occupation_correct", variable.occupation)
+                                           ,
+                                           newText("occupation_incorrect", variable.occupation_distractor)
+                                           ,
+                                           newText("nationality_correct",  variable.nationality)
+                                           ,
+                                           newText("nationality_incorrect",  variable.nationality_distractor)
+                                           ,
+                                           newText("lifetime_correct", variable.lifetime)
+                                           ,
+                                           newText("lifetime_incorrect", variable.lifetime_distractor)
+                                           ,
+                                           newImage("checkmark", "https://amor.cms.hu-berlin.de/~pallesid/dfg_pretests/pictures/checkmark.jpeg").size(30,30)
+                                           ,
+                                           newImage("crossmark", "https://amor.cms.hu-berlin.de/~pallesid/dfg_pretests/pictures/crossmark.png").size(30,30)
+                                           ,
+                                           // NAME
+                                           newCanvas("name", "100vw" , "100vh")
+                                           .add("center at 50%", "center at 20%", getText("post_name"))
+                                           .add("center at 25%", "center at 20%", getImage("checkmark") )
+                                           .add("center at 75%", "center at 20%", getImage("crossmark") )
+                                           .print()
+                                           ,
+                                           newSelector("post_name")
+                                           .add(getImage("checkmark"), getImage("crossmark"))
+                                           .keys("F", "J")
+                                           .wait()
+                                           ,
+                                           getCanvas("name").remove()
+                                           ,
+                                           // LIFETIME
+                                           newCanvas("lifetime", "100vw" , "100vh")
+                                           .add( "center at 30%", "center at 20%", getText("lifetime_correct"))
+                                           .add( "center at 70%", "center at 20%", getText("lifetime_incorrect"))
+                                           .print()
+                                           ,
+                                           newSelector("post_lifetime")
+                                           .add(getText("lifetime_correct"), getText("lifetime_incorrect"))
+                                           .shuffle()
+                                           .keys("F", "J")
+                                           .wait()
+                                           ,
+                                           getCanvas("lifetime").remove()
+                                           ,
+                                           // NATIONALITY
+                                           newCanvas("nationality", "100vw" , "100vh")
+                                           .add( "center at 30%", "center at 20%", getText("nationality_correct"))
+                                           .add( "center at 70%", "center at 20%", getText("nationality_incorrect"))
+                                           .print()
+                                           ,
+                                           newSelector("post_nationality")
+                                           .add(getText("nationality_correct"), getText("nationality_incorrect"))
+                                           .shuffle()
+                                           .keys("F", "J")
+                                           .wait()
+                                           ,
+                                           getCanvas("nationality").remove()
+                                           ,
+                                           // OCCUPATIION
+                                           newCanvas("occupation", "100vw" , "100vh")
+                                           .add(  "center at 30%", "center at 20%", getText("occupation_correct"))
+                                           .add("center at 70%", "center at 20%", getText("occupation_incorrect"))
+                                           .print()
+                                           ,
+                                           newSelector("post_occupation")
+                                           .add(getText("occupation_correct"), getText("occupation_incorrect"))
+                                           .shuffle()
+                                           .keys("F", "J")
+                                           .wait()
+                                           ,
+                                           getCanvas("occupation").remove()
+                                           ,
+                                           // WAIT
+                                           newCanvas("dots", "100vw" , "100vh")
+                                           .add("center at 50%", "center at 20%", newText("pleasewait_post2", "...").bold())
+                                           .print()
+                                           ,
+                                           newTimer("wait_post2", 1000)
+                                           .start()
+                                           .wait()
+                                           ,
+                                           getCanvas("dots").remove()
+                                       )
+                                       .log("prolificID", getVar("proID"))
+                                       .log("age", getVar("IDage"))
+                                       .log("sex", getVar("IDsex"))
+                                       .log("L2", getVar("IDling"))
+                                       .log("whichL2", getVar("whichL2"))
+                                       .log("type", variable.type)
+                                       .log("lifetime" , variable.lifetime)
+                                       .log("tense", variable.tense)
+                                       .log("mm", variable.mm)
                                        .log("rating", getVar("rating"))
                                        .log("item" , variable.item_id)
                                        .log("name" , variable.name)  
