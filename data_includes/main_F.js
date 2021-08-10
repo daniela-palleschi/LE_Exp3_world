@@ -1464,6 +1464,8 @@ PennController. Template( PennController.GetTable( "master_spr_subset24_world_fa
                                            ,
                                            // NAME
                                            newCanvas("name", "100vw" , "100vh")
+                                           .add("center at 50%", "center at 12%", newText("Are you familiar with this person?")
+                                                .settings.css("font-size", "20px") .settings.color("red") )
                                            .add("center at 50%", "center at 20%", getText("post_name"))
                                            .add("center at 25%", "center at 20%", getImage("checkmark") )
                                            .add("center at 75%", "center at 20%", getImage("crossmark") )
@@ -1478,6 +1480,8 @@ PennController. Template( PennController.GetTable( "master_spr_subset24_world_fa
                                            ,
                                            // LIFETIME
                                            newCanvas("lifetime", "100vw" , "100vh")
+                                           .add("center at 50%", "center at 12%", newText("They are currently...")
+                                                .settings.css("font-size", "20px") .settings.color("red") )
                                            .add( "center at 30%", "center at 20%", getText("lifetime_correct"))
                                            .add( "center at 70%", "center at 20%", getText("lifetime_incorrect"))
                                            .print()
@@ -1492,6 +1496,8 @@ PennController. Template( PennController.GetTable( "master_spr_subset24_world_fa
                                            ,
                                            // NATIONALITY
                                            newCanvas("nationality", "100vw" , "100vh")
+                                           .add("center at 50%", "center at 12%", newText("Their nationality is/was...")
+                                                .settings.css("font-size", "20px") .settings.color("red") )
                                            .add( "center at 30%", "center at 20%", getText("nationality_correct"))
                                            .add( "center at 70%", "center at 20%", getText("nationality_incorrect"))
                                            .print()
@@ -1506,6 +1512,8 @@ PennController. Template( PennController.GetTable( "master_spr_subset24_world_fa
                                            ,
                                            // OCCUPATIION
                                            newCanvas("occupation", "100vw" , "100vh")
+                                           .add("center at 50%", "center at 12%", newText("They are most known for being a(n)...")
+                                                .settings.css("font-size", "20px") .settings.color("red") )
                                            .add(  "center at 30%", "center at 20%", getText("occupation_correct"))
                                            .add("center at 70%", "center at 20%", getText("occupation_incorrect"))
                                            .print()
